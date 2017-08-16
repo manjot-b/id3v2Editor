@@ -20,23 +20,23 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="addDirPushButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>Add Directory</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="addFilePushButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>Add File</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="deletePushButton">
           <property name="text">
-           <string>PushButton</string>
+           <string>Delete</string>
           </property>
          </widget>
         </item>
@@ -207,10 +207,6 @@
      </layout>
     </item>
    </layout>
-   <zorder>verticalLayoutWidget</zorder>
-   <zorder>line</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>verticalLayoutWidget_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
