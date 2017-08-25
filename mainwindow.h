@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QPixmap>
+#include <QStringList>
+#include <QStringListModel>
 
 namespace Ui {
 class MainWindow;
@@ -21,9 +23,15 @@ private slots:
 
     void on_deleteImgPushButton_clicked();
 
+    void on_addDirPushButton_clicked();
+
+    void on_addFilePushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QPixmap *albumCoverPixmap;
+    QStringList *audioFilesList;
+    QStringListModel *audioFilesModel;
 };
 
 #endif // MAINWINDOW_H
