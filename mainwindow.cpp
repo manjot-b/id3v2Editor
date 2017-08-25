@@ -4,6 +4,8 @@
 #include <QStringList>
 #include <QFileDialog>
 #include <QDir>
+#include <QFileInfo>
+#include <QDateTime>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -64,6 +66,10 @@ void MainWindow::on_addFilePushButton_clicked()
 {
     QStringList files = QFileDialog::getOpenFileNames(this, "Open Files", QDir::homePath(), "Audio Files(*.mp3 *.mp4 *.m4v *.m4a)");
     qDebug() << files;
+
+    QFileInfo fInfo(files.front());
+
+    qDebug() << fInfo.lastModified().toString("yyyy-MM-dd h:mm AP");
 
     audioFilesList->append(files);
     audioFilesModel->setStringList(*audioFilesList); // update model with updated list
