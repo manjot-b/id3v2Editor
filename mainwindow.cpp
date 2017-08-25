@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "audiofilemodel.h"
 
 #include <QStringList>
 #include <QFileDialog>
@@ -14,9 +15,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     albumCoverPixmap = new QPixmap();
+
+    AudioFileModel model(0);
+    ui->audioFilesTableView->setModel(&model);
+
+    /*
     audioFilesList = new QStringList();
     audioFilesModel = new QStringListModel();
     ui->audioFileListView->setModel(audioFilesModel);
+    */
+
 
 }
 
@@ -54,12 +62,13 @@ void MainWindow::on_addDirPushButton_clicked()
 
     qDebug() << files;
 
+    /*
     for (QString file : files)
     {
         QString absPath = dir + "/" + file;
         audioFilesList->append(absPath);
     }
-    audioFilesModel->setStringList(*audioFilesList); // update model with updated list
+    */
 }
 
 void MainWindow::on_addFilePushButton_clicked()
@@ -67,10 +76,6 @@ void MainWindow::on_addFilePushButton_clicked()
     QStringList files = QFileDialog::getOpenFileNames(this, "Open Files", QDir::homePath(), "Audio Files(*.mp3 *.mp4 *.m4v *.m4a)");
     qDebug() << files;
 
-    QFileInfo fInfo(files.front());
+    model->addFile(files.front());
 
-    qDebug() << fInfo.lastModified().toString("yyyy-MM-dd h:mm AP");
-
-    audioFilesList->append(files);
-    audioFilesModel->setStringList(*audioFilesList); // update model with updated list
 }

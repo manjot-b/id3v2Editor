@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include <QPixmap>
-#include <QStringList>
-#include <QStringListModel>
+#include "audiofilemodel.h"
 
 namespace Ui {
 class MainWindow;
@@ -30,8 +29,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QPixmap *albumCoverPixmap;
-    QStringList *audioFilesList;
-    QStringListModel *audioFilesModel;
+    AudioFileModel *model;
 };
 
 #endif // MAINWINDOW_H

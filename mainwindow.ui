@@ -66,14 +66,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QListView" name="audioFileListView">
-        <property name="minimumSize">
-         <size>
-          <width>375</width>
-          <height>0</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="QTableView" name="audioFilesTableView"/>
       </item>
      </layout>
     </item>
