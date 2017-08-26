@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     albumCoverPixmap = new QPixmap();
 
-    AudioFileModel model(0);
-    ui->audioFilesTableView->setModel(&model);
+    model = new AudioFileModel(0);
+    ui->audioFilesTableView->setModel(model);
 
     /*
     audioFilesList = new QStringList();
@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    //delete model;
 }
 
 void MainWindow::on_browseImgPushButton_clicked()
@@ -53,14 +54,15 @@ void MainWindow::on_addDirPushButton_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(
                 this, "Open Directory", QDir::homePath(), QFileDialog::ShowDirsOnly |  QFileDialog::DontResolveSymlinks);
-    qDebug() << dir;
+    model->addFilesFromDirectory(dir);
+    /*qDebug() << dir;
 
     QDir currentDir(dir);
     QStringList fileFilters;
     fileFilters << "*.mp3" << "*.m4a";
     QStringList files = currentDir.entryList(fileFilters);
 
-    qDebug() << files;
+    qDebug() << files;*/
 
     /*
     for (QString file : files)
@@ -76,6 +78,6 @@ void MainWindow::on_addFilePushButton_clicked()
     QStringList files = QFileDialog::getOpenFileNames(this, "Open Files", QDir::homePath(), "Audio Files(*.mp3 *.mp4 *.m4v *.m4a)");
     qDebug() << files;
 
-    model->addFile(files.front());
+    model->addFiles(files);
 
 }
