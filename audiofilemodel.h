@@ -19,11 +19,11 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
-    void addFile(QFileInfo);
-    void addFile(const QString&);
-    void addFiles(const QStringList&);
-    void addFiles(const QVector<QFileInfo>&);
-    void addFilesFromDirectory(const QString&);
+    bool addFile(const QFileInfo);
+    bool addFile(const QString&);
+    bool addFiles(const QStringList&);
+    bool addFiles(QVector<QFileInfo>&);
+    bool addFilesFromDirectory(const QString&);
 
     enum ColumnName
     {

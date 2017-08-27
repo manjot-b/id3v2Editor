@@ -54,23 +54,8 @@ void MainWindow::on_addDirPushButton_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(
                 this, "Open Directory", QDir::homePath(), QFileDialog::ShowDirsOnly |  QFileDialog::DontResolveSymlinks);
-    model->addFilesFromDirectory(dir);
-    /*qDebug() << dir;
+    qDebug() << model->addFilesFromDirectory(dir);
 
-    QDir currentDir(dir);
-    QStringList fileFilters;
-    fileFilters << "*.mp3" << "*.m4a";
-    QStringList files = currentDir.entryList(fileFilters);
-
-    qDebug() << files;*/
-
-    /*
-    for (QString file : files)
-    {
-        QString absPath = dir + "/" + file;
-        audioFilesList->append(absPath);
-    }
-    */
 }
 
 void MainWindow::on_addFilePushButton_clicked()
@@ -78,6 +63,6 @@ void MainWindow::on_addFilePushButton_clicked()
     QStringList files = QFileDialog::getOpenFileNames(this, "Open Files", QDir::homePath(), "Audio Files(*.mp3 *.mp4 *.m4v *.m4a)");
     qDebug() << files;
 
-    model->addFiles(files);
+    qDebug() << model->addFiles(files);
 
 }

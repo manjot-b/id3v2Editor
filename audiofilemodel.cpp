@@ -13,55 +13,78 @@ AudioFileModel::AudioFileModel(QObject *parent)
 
 AudioFileModel::~AudioFileModel() {}
 
-void AudioFileModel::addFile(const QString &filePath)
+bool AudioFileModel::addFile(const QString &filePath)
 {
     QFileInfo f(filePath);
-    addFile(f);
+    return addFile(f);
 }
 
-void AudioFileModel::addFile(QFileInfo file)
+bool AudioFileModel::addFile(const QFileInfo file)
 {
-    beginInsertRows(QModelIndex(), audioFiles.size()+1, audioFiles.size()+1);
-    audioFiles.append(file);
-    endInsertRows();
-
+    if (file.isFile() && !audioFiles.contains(file))
+    {
+        beginInsertRows(QModelIndex(), audioFiles.size()+1, audioFiles.size()+1);
+        audioFiles.append(file);
+        endInsertRows();
+        return true;    // success
+    }
+    return false;   // file wasn't a file or was a duplicate
 }
 
-void AudioFileModel::addFiles(const QStringList &filePaths)
+bool AudioFileModel::addFiles(const QStringList &filePaths)
 {
     QVector<QFileInfo> temp;
     for (QString path : filePaths)
     {
         QFileInfo f(path);
-        temp.append(f);
+        if (!f.isFile())
+            return false;
+
+        if (!audioFiles.contains(f))
+            temp.append(f);
     }
-    addFiles(temp);
+    return addFiles(temp);
 }
 
-void AudioFileModel::addFiles(const QVector<QFileInfo> &files)
+bool AudioFileModel::addFiles(QVector<QFileInfo> &files)
 {
-    if (files.isEmpty()) return;
+    for (int i = 0; i < files.size(); i++)
+    {
+        for (auto file : audioFiles)
+        {
+            if (!files[i].isFile())
+                return false;   // failure
+            if (files[i] == file)
+                files.removeAt(i);  // remove duplicates
+        }
+    }
+
+    if (files.isEmpty())
+        return true;
+
     int firstRow = audioFiles.size() + 1;
     int lastRow = audioFiles.size() + files.size();
     beginInsertRows(QModelIndex(), firstRow, lastRow);
     audioFiles.append(files);
     endInsertRows();
+
+    return true;
 }
 
-void AudioFileModel::addFilesFromDirectory(const QString &dir)
+bool AudioFileModel::addFilesFromDirectory(const QString &dir)
 {
     QDir currentDir(dir);
     QList<QFileInfo> tempList = currentDir.entryInfoList(fileFilters);
-    qDebug() << dir;
-    addFiles(QVector<QFileInfo>::fromList(tempList));
+    QVector<QFileInfo> tempVec = QVector<QFileInfo>::fromList(tempList);
+    return addFiles(tempVec);
 }
 
-int AudioFileModel::rowCount(const QModelIndex &parent) const
+int AudioFileModel::rowCount(const QModelIndex & /*parent*/) const
 {
     return audioFiles.size();
 }
 
-int AudioFileModel::columnCount(const QModelIndex &parent) const
+int AudioFileModel::columnCount(const QModelIndex & /*parent*/) const
 {
     return cols;
 }
