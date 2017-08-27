@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     model = new AudioFileModel(0);
     ui->audioFilesTableView->setModel(model);
-
+    ui->audioFilesTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     /*
     audioFilesList = new QStringList();
     audioFilesModel = new QStringListModel();
