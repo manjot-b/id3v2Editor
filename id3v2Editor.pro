@@ -34,3 +34,15 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
+
+LIBS += -L$$PWD/libraries/taglib/taglib-release -llibtaglib
+
+INCLUDEPATH += $$PWD/libraries/taglib/taglib
+INCLUDEPATH += $$PWD/libraries/taglib/taglib/toolkit
+INCLUDEPATH += $$PWD/libraries/taglib
+
+INCLUDEPATH += $$PWD/libraries/taglib/taglib/mpeg
+INCLUDEPATH += $$PWD/libraries/taglib/taglib/mpeg/id3v2
+INCLUDEPATH += $$PWD/libraries/taglib/taglib/mpeg/id3v2/frames
+
+INCLUDEPATH += $$PWD/libraries/taglib/taglib/mp4

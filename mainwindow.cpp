@@ -25,6 +25,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete model;
+    delete albumCoverPixmap;
 }
 
 void MainWindow::on_browseImgPushButton_clicked()
