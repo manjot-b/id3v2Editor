@@ -26,11 +26,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    audiofilemodel.cpp
+    audiofilemodel.cpp \
+    audiofile.cpp \
+    mp3file.cpp
 
 HEADERS += \
         mainwindow.h \
-    audiofilemodel.h
+    audiofilemodel.h \
+    audiofile.h \
+    mp3file.h
 
 FORMS += \
         mainwindow.ui

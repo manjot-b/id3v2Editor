@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "audiofilemodel.h"
+#include "mp3file.h"
 
 #include <QStringList>
 #include <QFileDialog>
@@ -19,6 +20,16 @@ MainWindow::MainWindow(QWidget *parent) :
     model = new AudioFileModel(0);
     ui->audioFilesTableView->setModel(model);
     ui->audioFilesTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    MP3File f("doctor.mp3");
+    qDebug() << "Artist " << f.getArtist();
+    qDebug() << "Album Artist " << f.getAlbumArtist();
+    qDebug() << "Comments " << f.getComments();
+    qDebug() << "DiscNumber " << f.getDiscNumber();
+    qDebug() << "Lyrics " << f.getLyrics();
+    qDebug() << "Title " << f.getTitle();
+    qDebug() << "Track " << f.getTrackNumber();
+    qDebug() << "Year " << f.getYear();
 }
 
 MainWindow::~MainWindow()
