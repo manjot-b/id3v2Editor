@@ -8,6 +8,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QItemSelectionModel>
+#include <QModelIndexList>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -21,7 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->audioFilesTableView->setModel(model);
     ui->audioFilesTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    MP3File f("doctor.mp3");
+    QItemSelectionModel *selectionModel = ui->audioFilesTableView->selectionModel();
+    connect(selectionModel, SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+                                   this, SLOT(on_audioFilesTableView_selectionChanged(QItemSelection, QItemSelection)));
+
+    /*MP3File f("doctor.mp3");
     qDebug() << "Artist " << f.getArtist();
     qDebug() << "Album Artist " << f.getAlbumArtist();
     qDebug() << "Comments " << f.getComments();
@@ -29,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "Lyrics " << f.getLyrics();
     qDebug() << "Title " << f.getTitle();
     qDebug() << "Track " << f.getTrackNumber();
-    qDebug() << "Year " << f.getYear();
+    qDebug() << "Year " << f.getYear();*/
 }
 
 MainWindow::~MainWindow()
@@ -58,16 +64,28 @@ void MainWindow::on_deleteImgPushButton_clicked()
 void MainWindow::on_addDirPushButton_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(
-                this, "Open Directory", QDir::homePath(), QFileDialog::ShowDirsOnly |  QFileDialog::DontResolveSymlinks);
+                this, "Open Directory", QDir::homePath(),
+                QFileDialog::ShowDirsOnly |  QFileDialog::DontResolveSymlinks);
     qDebug() << model->addFilesFromDirectory(dir);
 
 }
 
 void MainWindow::on_addFilePushButton_clicked()
 {
-    QStringList files = QFileDialog::getOpenFileNames(this, "Open Files", QDir::homePath(), "Audio Files(*.mp3 *.mp4 *.m4v *.m4a)");
+    QStringList files = QFileDialog::getOpenFileNames(this, "Open Files",
+                                                      QDir::homePath(),
+                                                      "Audio Files(*.mp3 *.mp4 *.m4v *.m4a)");
     qDebug() << files;
 
     qDebug() << model->addFiles(files);
 
+}
+
+void MainWindow::on_audioFilesTableView_selectionChanged(const QItemSelection &,
+                                                         const QItemSelection &)
+{
+    QModelIndexList selection = ui->audioFilesTableView->selectionModel()->selectedRows();
+
+    QString artist = model->getArtist(selection.front());
+    ui->artistLineEdit->setText(artist);
 }

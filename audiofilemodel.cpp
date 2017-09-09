@@ -1,4 +1,6 @@
 #include "audiofilemodel.h"
+#include "mp3file.h"
+
 #include <QDateTime>
 #include <QList>
 #include <QDir>
@@ -11,52 +13,67 @@ AudioFileModel::AudioFileModel(QObject *parent)
     fileFilters << "*mp3" << "*.m4a";
 }
 
-AudioFileModel::~AudioFileModel() {}
+AudioFileModel::~AudioFileModel()
+{
+    for (AudioFile *f : audioFiles)
+        delete f;
+}
 
 bool AudioFileModel::addFile(const QString &filePath)
 {
-    QFileInfo f(filePath);
-    return addFile(f);
+    //AudioFile f(filePath);
+    QStringList extension = filePath.split(".");
+    if (!extension.isEmpty() && extension.last() == "mp3")
+    {
+        MP3File *mp3 = new MP3File(filePath);
+        if (mp3 != nullptr) // will not open if used by another process or currently open
+            return addFile(mp3);
+    }
+    return false;
 }
 
-bool AudioFileModel::addFile(const QFileInfo file)
+bool AudioFileModel::addFile(AudioFile *file)
 {
-    if (file.isFile() && !audioFiles.contains(file))
+    if (file->isFile())
     {
-        beginInsertRows(QModelIndex(), audioFiles.size()+1, audioFiles.size()+1);
-        audioFiles.append(file);
-        endInsertRows();
-        return true;    // success
+        if (!isInAudioFilesList(*file))
+        {
+            beginInsertRows(QModelIndex(), audioFiles.size()+1, audioFiles.size()+1);
+            audioFiles.append(file);
+            endInsertRows();
+            return true;    // success
+        }
     }
+
     return false;   // file wasn't a file or was a duplicate
 }
 
 bool AudioFileModel::addFiles(const QStringList &filePaths)
 {
-    QVector<QFileInfo> temp;
+    QVector<AudioFile *> temp;
     for (QString path : filePaths)
     {
-        QFileInfo f(path);
-        if (!f.isFile())
-            return false;
-
-        if (!audioFiles.contains(f))
-            temp.append(f);
+        QStringList extension = path.split(".");
+        if (extension.last() == "mp3")
+        {
+            MP3File *file = new MP3File(path);
+            if (file != nullptr)
+                temp.append(file);
+        }
     }
     return addFiles(temp);
 }
 
-bool AudioFileModel::addFiles(QVector<QFileInfo> &files)
+bool AudioFileModel::addFiles(QVector<AudioFile *> &files)
 {
-    for (int i = 0; i < files.size(); i++)
+    QVector<AudioFile *>::const_reverse_iterator rit = files.rbegin();
+    for (; rit != files.rend(); rit++)
     {
-        for (auto file : audioFiles)
-        {
-            if (!files[i].isFile())
-                return false;   // failure
-            if (files[i] == file)
-                files.removeAt(i);  // remove duplicates
-        }
+        if (!((*rit)->isFile()))
+            return false;   // failure
+
+        if (isInAudioFilesList( **rit ))
+            files.removeAll(*rit);
     }
 
     if (files.isEmpty())
@@ -75,8 +92,31 @@ bool AudioFileModel::addFilesFromDirectory(const QString &dir)
 {
     QDir currentDir(dir);
     QList<QFileInfo> tempList = currentDir.entryInfoList(fileFilters);
-    QVector<QFileInfo> tempVec = QVector<QFileInfo>::fromList(tempList);
+    QVector<AudioFile *> tempVec;
+    for (auto const &file : tempList)
+    {
+        if (file.suffix() == "mp3")
+        {
+            MP3File *mp3File = new MP3File(file);
+            if (mp3File != nullptr)
+                tempVec.append(mp3File);
+        }
+    }
+
     return addFiles(tempVec);
+}
+
+bool AudioFileModel::isInAudioFilesList(AudioFile &file)
+{
+    if (audioFiles.isEmpty())
+        return false;
+
+    for (auto ptr : audioFiles)
+    {
+        if (ptr->absoluteFilePath() == file.absoluteFilePath())
+            return true;
+    }
+    return false;
 }
 
 int AudioFileModel::rowCount(const QModelIndex & /*parent*/) const
@@ -96,17 +136,17 @@ QVariant AudioFileModel::data(const QModelIndex &index, int role) const
     case Qt::DisplayRole:
         if (!audioFiles.isEmpty())
         {
-            QFileInfo f = audioFiles.at(index.row());
+            QFileInfo *f = audioFiles.at(index.row());
             switch(index.column())
             {
             case ColumnName::FILENAME:
-                return f.fileName();
+                return f->fileName();
             case ColumnName::FILEPATH:
-                return f.absoluteFilePath();
+                return f->absoluteFilePath();
             case ColumnName::FILESIZE:
-                return QString::number(f.size() / (float)1048576, 'f', 2);   // bytes to megabytes
+                return QString::number(f->size() / (float)1048576, 'f', 2);   // bytes to megabytes
             case ColumnName::LASTMODIFIED:
-                return f.lastModified().toString("yyyy-MM-dd h:mm AP");
+                return f->lastModified().toString("yyyy-MM-dd h:mm AP");
             }
         }
         break;
@@ -146,3 +186,20 @@ QVariant AudioFileModel::headerData(int section, Qt::Orientation orientation, in
     }
     return QVariant();
 }
+
+QString AudioFileModel::getArtist(QModelIndex &index) const
+{
+    return audioFiles[index.row()]->getArtist();
+}
+QString AudioFileModel::getAlbumArtist(QModelIndex &index) const
+{
+    return audioFiles[index.row()]->getAlbumArtist();
+}
+/*
+QString getAlbum(QModelIndex &) const
+QString getComments(QModelIndex &) const
+QString getDiscNumber(QModelIndex &) const
+QString getLyrics(QModelIndex &) const
+QString getTitle(QModelIndex &) const
+QString getTrackNumber(QModelIndex &) const
+int getYear(QModelIndex &) const*/

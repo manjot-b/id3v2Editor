@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPixmap>
+#include <QItemSelection>
 #include "audiofilemodel.h"
 
 namespace Ui {
@@ -25,6 +26,9 @@ private slots:
     void on_addDirPushButton_clicked();
 
     void on_addFilePushButton_clicked();
+
+    void on_audioFilesTableView_selectionChanged(const QItemSelection &,
+                                                 const QItemSelection &);
 
 private:
     Ui::MainWindow *ui;
