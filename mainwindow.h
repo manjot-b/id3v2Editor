@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPixmap>
 #include <QItemSelection>
+#include <QModelIndexList>
 #include "audiofilemodel.h"
 
 namespace Ui {
@@ -17,6 +18,22 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    enum ComboBoxType
+    {
+        FILENAME,
+        TITLE,
+        ARTIST,
+        ALBUMARTIST,
+        ALBUM,
+        YEAR,
+        COMPOSER,
+        COMMENTS,
+        TRACK,
+        TRACKTOTAL,
+        DISC,
+        DISCTOTAL
+    };
 
 private slots:
     void on_browseImgPushButton_clicked();
@@ -34,6 +51,9 @@ private:
     Ui::MainWindow *ui;
     QPixmap *albumCoverPixmap;
     AudioFileModel *model;
+    QString unchanged;
+
+    void setComboBoxText(const QModelIndexList &selections, ComboBoxType comboBoxType);
 };
 
 #endif // MAINWINDOW_H

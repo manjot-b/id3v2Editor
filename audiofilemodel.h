@@ -27,15 +27,18 @@ public:
     bool addFiles(QVector<AudioFile *> &);
     bool addFilesFromDirectory(const QString &);
 
-    QString getArtist(QModelIndex &) const;
-    QString getAlbumArtist(QModelIndex &) const;
-    QString getAlbum(QModelIndex &) const;
-    QString getComments(QModelIndex &) const;
-    QString getDiscNumber(QModelIndex &) const;
-    QString getLyrics(QModelIndex &) const;
-    QString getTitle(QModelIndex &) const;
-    QString getTrackNumber(QModelIndex &) const;
-    int getYear(QModelIndex &) const;
+    QString getArtist(const QModelIndex &) const;
+    QString getAlbumArtist(const QModelIndex &) const;
+    QString getAlbum(const QModelIndex &) const;
+    QString getComments(const QModelIndex &) const;
+    QString getDiscNumber(const QModelIndex &) const;
+    QString getDiscTotal(const QModelIndex &) const;
+    QString getFileName(const QModelIndex &) const;
+    QString getLyrics(const QModelIndex &) const;
+    QString getTitle(const QModelIndex &) const;
+    QString getTrackNumber(const QModelIndex &) const;
+    QString getTrackTotal(const QModelIndex &) const;
+    QString getYear(const QModelIndex &) const;
 
     enum ColumnName
     {

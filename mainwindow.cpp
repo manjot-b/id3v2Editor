@@ -9,12 +9,10 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QItemSelectionModel>
-#include <QModelIndexList>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent), ui(new Ui::MainWindow), unchanged("*unchanged*")
 {
     ui->setupUi(this);
     albumCoverPixmap = new QPixmap();
@@ -27,15 +25,31 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(selectionModel, SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
                                    this, SLOT(on_audioFilesTableView_selectionChanged(QItemSelection, QItemSelection)));
 
-    /*MP3File f("doctor.mp3");
-    qDebug() << "Artist " << f.getArtist();
-    qDebug() << "Album Artist " << f.getAlbumArtist();
-    qDebug() << "Comments " << f.getComments();
-    qDebug() << "DiscNumber " << f.getDiscNumber();
-    qDebug() << "Lyrics " << f.getLyrics();
-    qDebug() << "Title " << f.getTitle();
-    qDebug() << "Track " << f.getTrackNumber();
-    qDebug() << "Year " << f.getYear();*/
+    ui->fileNameComboBox->addItem(unchanged);
+    ui->fileNameComboBox->setEditText("");
+    ui->artistComboBox->addItem(unchanged);
+    ui->artistComboBox->setEditText("");
+    ui->yearComboBox->addItem(unchanged);
+    ui->yearComboBox->setEditText("");
+    ui->commentsComboBox->addItem(unchanged);
+    ui->commentsComboBox->setEditText("");
+    ui->titleComboBox->addItem(unchanged);
+    ui->titleComboBox->setEditText("");
+    ui->albumArtistComboBox->addItem(unchanged);
+    ui->albumArtistComboBox->setEditText("");
+    ui->composerComboBox->addItem(unchanged);
+    ui->composerComboBox->setEditText("");
+    ui->trackComboBox->addItem(unchanged);
+    ui->trackComboBox->setEditText("");
+    ui->trackTotalComboBox->addItem(unchanged);
+    ui->trackTotalComboBox->setEditText("");
+    ui->discComboBox->addItem(unchanged);
+    ui->discComboBox->setEditText("");
+    ui->discTotalComboBox->addItem(unchanged);
+    ui->discTotalComboBox->setEditText("");
+    ui->albumComboBox->addItem(unchanged);
+    ui->albumComboBox->setEditText("");
+
 }
 
 MainWindow::~MainWindow()
@@ -84,8 +98,142 @@ void MainWindow::on_addFilePushButton_clicked()
 void MainWindow::on_audioFilesTableView_selectionChanged(const QItemSelection &,
                                                          const QItemSelection &)
 {
-    QModelIndexList selection = ui->audioFilesTableView->selectionModel()->selectedRows();
+    QModelIndexList selections = ui->audioFilesTableView->selectionModel()->selectedRows();
+    setComboBoxText(selections, ComboBoxType::ARTIST);
+    setComboBoxText(selections, ComboBoxType::ALBUMARTIST);
+    setComboBoxText(selections, ComboBoxType::ALBUM);
+    setComboBoxText(selections, ComboBoxType::COMMENTS);
+    setComboBoxText(selections, ComboBoxType::DISC);
+    setComboBoxText(selections, ComboBoxType::DISCTOTAL);
+    setComboBoxText(selections, ComboBoxType::FILENAME);
+    setComboBoxText(selections, ComboBoxType::TITLE);
+    setComboBoxText(selections, ComboBoxType::TRACK);
+    setComboBoxText(selections, ComboBoxType::TRACKTOTAL);
+    setComboBoxText(selections, ComboBoxType::YEAR);
+    setComboBoxText(selections, ComboBoxType::COMPOSER);
+}
 
-    QString artist = model->getArtist(selection.front());
-    ui->artistLineEdit->setText(artist);
+void MainWindow::setComboBoxText(const QModelIndexList &selections, ComboBoxType comboBoxType)
+{
+    QString field;
+    // there is only 1 of each file loaded
+    // so no need to check if the file names match
+    // for multiple selections
+    if (comboBoxType == ComboBoxType::FILENAME)
+    {
+        if (selections.size() == 0)
+            field = "";
+        else if (selections.size() == 1)
+            field = model->getFileName(selections.front());
+        else
+            field = unchanged;
+        ui->fileNameComboBox->setEditText(field);
+        return;
+    }
+
+    QComboBox *comboBox;
+
+    switch(comboBoxType)
+    {
+    case ComboBoxType::TITLE:
+        comboBox = ui->titleComboBox; break;
+    case ComboBoxType::ARTIST:
+        comboBox = ui->artistComboBox; break;
+    case ComboBoxType::ALBUMARTIST:
+        comboBox = ui->albumArtistComboBox; break;
+    case ComboBoxType::ALBUM:
+        comboBox = ui->albumComboBox; break;
+    case ComboBoxType::YEAR:
+        comboBox = ui->yearComboBox; break;
+    case ComboBoxType::COMPOSER:
+        comboBox = ui->composerComboBox; break;
+    case ComboBoxType::COMMENTS:
+        comboBox = ui->commentsComboBox; break;
+    case ComboBoxType::TRACK:
+        comboBox = ui->trackComboBox; break;
+    case ComboBoxType::TRACKTOTAL:
+        comboBox = ui->trackTotalComboBox; break;
+    case ComboBoxType::DISC:
+        comboBox = ui->discComboBox; break;
+    case ComboBoxType::DISCTOTAL:
+        comboBox = ui->discTotalComboBox; break;
+    default: return;
+    }
+
+    if (!selections.isEmpty())
+    {
+        switch (comboBoxType)
+        {
+        case ComboBoxType::TITLE:
+            field = model->getTitle(selections.front()); break;
+        case ComboBoxType::ARTIST:
+            field = model->getArtist(selections.front()); break;
+        case ComboBoxType::ALBUMARTIST:
+            field = model->getAlbumArtist(selections.front()); break;
+        case ComboBoxType::ALBUM:
+            field = model->getAlbum(selections.front()); break;
+        case ComboBoxType::YEAR:
+            field = model->getYear(selections.front()); break;
+        case ComboBoxType::COMPOSER:
+            //field = model->getComposer(selections.front());
+            break;
+        case ComboBoxType::COMMENTS:
+            field = model->getComments(selections.front()); break;
+        case ComboBoxType::TRACK:
+            field = model->getTrackNumber(selections.front()); break;
+        case ComboBoxType::TRACKTOTAL:
+            field = model->getTrackTotal(selections.front()); break;
+        case ComboBoxType::DISC:
+            field = model->getDiscNumber(selections.front()); break;
+        case ComboBoxType::DISCTOTAL:
+            field = model->getDiscTotal(selections.front()); break;
+        }
+    }
+    else field = "";
+
+    QString currField;
+    bool allSame = true;
+    int i = 0;
+
+    while (i < selections.size() && allSame)
+    {
+        switch (comboBoxType)
+        {
+        case ComboBoxType::TITLE:
+            currField = model->getTitle(selections.at(i)); break;
+        case ComboBoxType::ARTIST:
+            currField = model->getArtist(selections.at(i)); break;
+        case ComboBoxType::ALBUMARTIST:
+            currField = model->getAlbumArtist(selections.at(i)); break;
+        case ComboBoxType::ALBUM:
+            currField = model->getAlbum(selections.at(i)); break;
+        case ComboBoxType::YEAR:
+            currField = model->getYear(selections.at(i)); break;
+        case ComboBoxType::COMPOSER:
+            //currField = model->getComposer(selections.at(i));
+            break;
+        case ComboBoxType::COMMENTS:
+            currField = model->getComments(selections.at(i)); break;
+        case ComboBoxType::TRACK:
+            currField = model->getTrackNumber(selections.at(i)); break;
+        case ComboBoxType::TRACKTOTAL:
+            currField = model->getTrackTotal(selections.at(i)); break;
+        case ComboBoxType::DISC:
+            currField = model->getDiscNumber(selections.at(i)); break;
+        case ComboBoxType::DISCTOTAL:
+            currField = model->getDiscTotal(selections.at(i)); break;
+        }
+
+        if (field != currField)
+            allSame = false;
+        i++;
+    }
+
+    if (comboBoxType != ComboBoxType::FILENAME)
+    {
+        if (!allSame)
+            comboBox->setCurrentIndex(0); // makes the combo box show *unchanged*
+        else
+            comboBox->setEditText(field);    // will make it blank if selections list is empty
+    }
 }
