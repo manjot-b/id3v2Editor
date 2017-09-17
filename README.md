@@ -2,7 +2,7 @@ This is a GUI application that lets the user
 edit the tags/metadata stored in mp3 and mp4 (m4a)
 files.
 
-INSTALL TAGLIB
+INSTALL TAGLIB:
 To get up and running you first need to compile the taglib
 library. Simply follow these steps.
 
@@ -31,6 +31,6 @@ library. Simply follow these steps.
 	with Qt Creator. Switch the build type from debug to release and then
 	click on the hammer to build the project.
 	
-COMPILE PROJECT
+COMPILE PROJECT:
 Now all you need to do it go to the root folder and open up id3v2Editor.pro
 and compile and run it!
