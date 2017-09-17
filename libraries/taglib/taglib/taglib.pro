@@ -2,6 +2,7 @@ TEMPLATE = lib
 
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/..
+INCLUDEPATH += $$PWD/../build
 INCLUDEPATH += $$PWD/../3rdparty/utf8-cpp
 INCLUDEPATH += $$PWD/ape
 INCLUDEPATH += $$PWD/asf
