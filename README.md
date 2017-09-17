@@ -11,3 +11,13 @@ library. Simply follow these steps.
 2.	Open up the CMake GUI and set source code folder to libraries/taglib
 	(the folder with all the cmake files and 3rdparty and bindings folder etc)
 	
+3.	in libraries/taglib create a new folder called "build" and set the path
+	for the build to be this newly created folder
+
+4.	Hit configure and set the generator to MinGW Makefiles. Press Finish
+	(Make sure you have the mingw/bin folder to you PATH. It will be in the 
+	Qt/Tools/mingw/bin)
+	
+5.	Click Generate
+
+6.	
