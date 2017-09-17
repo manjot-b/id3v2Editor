@@ -244,7 +244,7 @@ SOURCES += $$PWD/xm/xmfile.cpp
 SOURCES += $$PWD/xm/xmproperties.cpp
 
 HEADERS += $$PWD/../config.h
-HEADERS += $$PWD/../taglib_config.h
+HEADERS += $$PWD/build/taglib_config.h
 
 DEFINES += MAKE_TAGLIB_LIB
 DEFINES += WITH_ASF
