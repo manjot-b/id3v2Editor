@@ -2,6 +2,7 @@ TEMPLATE = lib
 
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/..
+INCLUDEPATH += $$PWD/../3rdparty/utf8-cpp
 INCLUDEPATH += $$PWD/ape
 INCLUDEPATH += $$PWD/asf
 INCLUDEPATH += $$PWD/CMakeFiles
@@ -139,6 +140,10 @@ HEADERS += $$PWD/wavpack/wavpackproperties.h
 HEADERS += $$PWD/xm/xmfile.h
 HEADERS += $$PWD/xm/xmproperties.h
 
+HEADERS += $$PWD/../config.h
+HEADERS += $$PWD/build/taglib_config.h
+HEADERS += $$PWD/../3rdparty/utf8-cpp/checked.h
+
 SOURCES += $$PWD/audioproperties.cpp
 SOURCES += $$PWD/fileref.cpp
 SOURCES += $$PWD/tag.cpp
@@ -242,9 +247,6 @@ SOURCES += $$PWD/wavpack/wavpackfile.cpp
 SOURCES += $$PWD/wavpack/wavpackproperties.cpp
 SOURCES += $$PWD/xm/xmfile.cpp
 SOURCES += $$PWD/xm/xmproperties.cpp
-
-HEADERS += $$PWD/../config.h
-HEADERS += $$PWD/build/taglib_config.h
 
 DEFINES += MAKE_TAGLIB_LIB
 DEFINES += WITH_ASF
