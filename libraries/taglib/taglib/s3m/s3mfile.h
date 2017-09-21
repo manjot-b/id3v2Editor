@@ -29,7 +29,7 @@
 #include "tfile.h"
 #include "audioproperties.h"
 #include "taglib_export.h"
-#include "mod/modfilebase.h"
+#include "modfilebase.h"
 #include "modtag.h"
 #include "s3mproperties.h"
 
