@@ -11,12 +11,11 @@ library. Simply follow these steps.
 2.	Open up the CMake GUI and set source code folder to libraries/taglib
 	(the folder with all the cmake files and 3rdparty and bindings folder etc)
 	
-3.	in libraries/taglib create a new folder called "build" and set the path
-	for the build to be this newly created folder
+3.	Set the path for the build to be in the same directory as the source
 
 4.	Hit configure and set the generator to MinGW Makefiles. Press Finish
-	(Make sure you have the mingw/bin folder to you PATH. It will be in the 
-	Qt/Tools/mingw/bin)
+	(Make sure you have the mingw compiler in your PATH. It will be in the 
+	Qt/Tools/mingw/bin folder)
 	
 	If you recieve some CMake error "the source does not match the source", 
 	just save the taglib.pro file in libraries/taglib/taglib to some 

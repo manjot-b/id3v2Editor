@@ -39,6 +39,7 @@ CMakeLists.txt.user*
 *.jpg
 *.mp3
 *.m4a
+libraries/taglib/
 
 # APPENDED FROM TAGLIB
 cmake_install.cmake

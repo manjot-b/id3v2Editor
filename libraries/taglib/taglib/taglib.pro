@@ -2,7 +2,6 @@ TEMPLATE = lib
 
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/..
-INCLUDEPATH += $$PWD/../build
 INCLUDEPATH += $$PWD/../3rdparty
 INCLUDEPATH += $$PWD/ape
 INCLUDEPATH += $$PWD/asf
@@ -133,7 +132,6 @@ HEADERS += $$PWD/toolkit/tstring.h
 HEADERS += $$PWD/toolkit/tstringlist.h
 HEADERS += $$PWD/toolkit/tutils.h
 HEADERS += $$PWD/toolkit/tzlib.h
-HEADERS += $$PWD/toolkit/unicode.h
 HEADERS += $$PWD/trueaudio/trueaudiofile.h
 HEADERS += $$PWD/trueaudio/trueaudioproperties.h
 HEADERS += $$PWD/wavpack/wavpackfile.h
@@ -142,7 +140,7 @@ HEADERS += $$PWD/xm/xmfile.h
 HEADERS += $$PWD/xm/xmproperties.h
 
 HEADERS += $$PWD/../config.h
-HEADERS += $$PWD/build/taglib_config.h
+HEADERS += $$PWD/../taglib_config.h
 HEADERS += $$PWD/../3rdparty/utf8-cpp/checked.h
 
 SOURCES += $$PWD/audioproperties.cpp
@@ -241,7 +239,6 @@ SOURCES += $$PWD/toolkit/trefcounter.cpp
 SOURCES += $$PWD/toolkit/tstring.cpp
 SOURCES += $$PWD/toolkit/tstringlist.cpp
 SOURCES += $$PWD/toolkit/tzlib.cpp
-SOURCES += $$PWD/toolkit/unicode.cpp
 SOURCES += $$PWD/trueaudio/trueaudiofile.cpp
 SOURCES += $$PWD/trueaudio/trueaudioproperties.cpp
 SOURCES += $$PWD/wavpack/wavpackfile.cpp
