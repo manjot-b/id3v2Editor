@@ -111,6 +111,8 @@ void MainWindow::on_audioFilesTableView_selectionChanged(const QItemSelection &,
     setComboBoxText(selections, ComboBoxType::TRACKTOTAL);
     setComboBoxText(selections, ComboBoxType::YEAR);
     setComboBoxText(selections, ComboBoxType::COMPOSER);
+
+    setLyricsTextBrowser(selections);
 }
 
 void MainWindow::setComboBoxText(const QModelIndexList &selections, ComboBoxType comboBoxType)
@@ -175,8 +177,7 @@ void MainWindow::setComboBoxText(const QModelIndexList &selections, ComboBoxType
         case ComboBoxType::YEAR:
             field = model->getYear(selections.front()); break;
         case ComboBoxType::COMPOSER:
-            //field = model->getComposer(selections.front());
-            break;
+            field = model->getComposer(selections.front()); break;
         case ComboBoxType::COMMENTS:
             field = model->getComments(selections.front()); break;
         case ComboBoxType::TRACK:
@@ -210,8 +211,7 @@ void MainWindow::setComboBoxText(const QModelIndexList &selections, ComboBoxType
         case ComboBoxType::YEAR:
             currField = model->getYear(selections.at(i)); break;
         case ComboBoxType::COMPOSER:
-            //currField = model->getComposer(selections.at(i));
-            break;
+            currField = model->getComposer(selections.at(i)); break;
         case ComboBoxType::COMMENTS:
             currField = model->getComments(selections.at(i)); break;
         case ComboBoxType::TRACK:
@@ -229,11 +229,36 @@ void MainWindow::setComboBoxText(const QModelIndexList &selections, ComboBoxType
         i++;
     }
 
-    if (comboBoxType != ComboBoxType::FILENAME)
+    if (comboBoxType != ComboBoxType::FILENAME) // special case already handled
     {
         if (!allSame)
             comboBox->setCurrentIndex(0); // makes the combo box show *unchanged*
         else
             comboBox->setEditText(field);    // will make it blank if selections list is empty
     }
+}
+
+void MainWindow::setLyricsTextBrowser(const QModelIndexList &selections)
+{
+    QString lyrics;
+    if (!selections.isEmpty())
+    {
+        lyrics = model->getLyrics(selections.front());
+
+        int i = 0;
+        bool allSame = true;
+        QString currLyrics;
+
+        while (i < selections.size() && allSame)
+        {
+            currLyrics = model->getLyrics(selections.at(i));
+            if (currLyrics != lyrics)
+            {
+                lyrics = unchanged;
+                allSame = false;
+            }
+            i++;
+        }
+    }
+    ui->lyricsTextBrowser->setText(lyrics);
 }

@@ -31,6 +31,7 @@ public:
     QString getAlbumArtist(const QModelIndex &) const;
     QString getAlbum(const QModelIndex &) const;
     QString getComments(const QModelIndex &) const;
+    QString getComposer(const QModelIndex &) const;
     QString getDiscNumber(const QModelIndex &) const;
     QString getDiscTotal(const QModelIndex &) const;
     QString getFileName(const QModelIndex &) const;

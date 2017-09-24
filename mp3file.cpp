@@ -22,6 +22,7 @@ QString MP3File::getArtist() const { return artist; }
 QString MP3File::getAlbumArtist() const { return albumArtist; }
 QString MP3File::getAlbum() const { return album; }
 QString MP3File::getComments() const { return comments; }
+QString MP3File::getComposer() const { return composer; }
 QString MP3File::getDiscNumber() const { return discNumber; }
 QString MP3File::getLyrics() const { return lyrics; }
 QString MP3File::getTitle() const { return title; }
@@ -41,20 +42,24 @@ void MP3File::extractData()
         title = QString(tag->title().toCString());
         year = tag->year();
 
-        TagLib::ID3v2::FrameList frames = tag->frameList("TPE2");
+        TagLib::ID3v2::FrameList frames = tag->frameList("TPE2");   // album artist
         if (!frames.isEmpty())
             albumArtist = QString(tag->frameList("TPE2").front()->toString().toCString());
 
-        frames = tag->frameList("TPOS");
+        frames = tag->frameList("TPOS");    // disc number
         if(!frames.isEmpty())
             discNumber = QString(tag->frameList("TPOS").front()->toString().toCString());
 
-        frames = tag->frameList("USLT");
+        frames = tag->frameList("USLT");    // lyrics
         if(!frames.isEmpty())
             lyrics = QString(tag->frameList("USLT").front()->toString().toCString());
 
-        frames = tag->frameList("TRCK");
+        frames = tag->frameList("TRCK");    // track number
         if(!frames.isEmpty())
             trackNumber = QString(tag->frameList("TRCK").front()->toString().toCString());
+
+        frames = tag->frameList("TCOM"); // composer
+        if (!frames.isEmpty())
+            composer = QString(tag->frameList("TCOM").front()->toString().toCString());
     }
 }

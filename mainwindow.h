@@ -54,6 +54,7 @@ private:
     QString unchanged;
 
     void setComboBoxText(const QModelIndexList &selections, ComboBoxType comboBoxType);
+    void setLyricsTextBrowser(const QModelIndexList &selections);
 };
 
 #endif // MAINWINDOW_H

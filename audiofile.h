@@ -16,6 +16,7 @@ public:
     virtual QString getAlbumArtist() const = 0;
     virtual QString getAlbum() const = 0;
     virtual QString getComments() const = 0;
+    virtual QString getComposer() const = 0;
     virtual QString getDiscNumber() const = 0;
     virtual QString getLyrics() const = 0;
     virtual QString getTitle() const = 0;
@@ -30,6 +31,7 @@ protected:
     QString albumArtist;
     QString album;
     QString comments;
+    QString composer;
     QString discNumber;
     QString lyrics;
     QString title;

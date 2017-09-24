@@ -313,7 +313,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="albumCoverTab">
          <attribute name="title">
@@ -375,7 +375,11 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QTextBrowser" name="textBrowser"/>
+           <widget class="QTextBrowser" name="lyricsTextBrowser">
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

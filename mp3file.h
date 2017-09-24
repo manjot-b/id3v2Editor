@@ -14,6 +14,7 @@ public:
     QString getAlbumArtist() const;
     QString getAlbum() const;
     QString getComments() const;
+    QString getComposer() const;
     QString getDiscNumber() const;
     QString getLyrics() const;
     QString getTitle() const;

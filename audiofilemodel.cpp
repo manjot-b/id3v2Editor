@@ -191,6 +191,7 @@ QString AudioFileModel::getArtist(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->getArtist();
 }
+
 QString AudioFileModel::getAlbumArtist(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->getAlbumArtist();
@@ -200,16 +201,24 @@ QString AudioFileModel::getAlbum(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->getAlbum();
 }
+
 QString AudioFileModel::getComments(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->getComments();
 }
+
+QString AudioFileModel::getComposer(const QModelIndex &index) const
+{
+    return audioFiles[index.row()]->getComposer();
+}
+
 QString AudioFileModel::getDiscNumber(const QModelIndex &index) const
 {
     QString discField= audioFiles[index.row()]->getDiscNumber();
     QString discNumber = discField.split('/').first();
     return discNumber;
 }
+
 QString AudioFileModel::getDiscTotal(const QModelIndex &index) const
 {
     QString discField = audioFiles[index.row()]->getDiscNumber();
@@ -219,24 +228,29 @@ QString AudioFileModel::getDiscTotal(const QModelIndex &index) const
     if (split.size() > 1) discTotal = split.at(1);
     return discTotal;
 }
+
 QString AudioFileModel::getFileName(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->fileName();
 }
+
 QString AudioFileModel::getLyrics(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->getLyrics();
 }
+
 QString AudioFileModel::getTitle(const QModelIndex &index) const
 {
     return audioFiles[index.row()]->getTitle();
 }
+
 QString AudioFileModel::getTrackNumber(const QModelIndex &index) const
 {
     QString trackField = audioFiles[index.row()]->getTrackNumber();
     QString trackNumber = trackField.split('/').first();
     return trackNumber;
 }
+
 QString AudioFileModel::getTrackTotal(const QModelIndex &index) const
 {
     QString trackField = audioFiles[index.row()]->getTrackNumber();
@@ -246,6 +260,7 @@ QString AudioFileModel::getTrackTotal(const QModelIndex &index) const
     if (split.size() > 1) trackTotal = split.at(1);
     return trackTotal;
 }
+
 QString AudioFileModel::getYear(const QModelIndex &index) const
 {
     QString year = QString::number(audioFiles[index.row()]->getYear());
