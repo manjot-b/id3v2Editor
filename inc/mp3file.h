@@ -32,6 +32,8 @@ public:
     void setTrackNumber(QString trackNumber);
     void setYear(int year);
 
+    bool save();
+
 private:
     void extractData();
 };

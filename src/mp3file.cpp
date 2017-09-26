@@ -1,20 +1,23 @@
 #include "mp3file.h"
 
-#include <taglib/mpeg/mpegfile.h>
-#include <taglib/mpeg/id3v2/id3v2tag.h>
-#include <taglib/mpeg/id3v2/id3v2frame.h>
+#include <mpegfile.h>
+#include <id3v2tag.h>
+#include <id3v2frame.h>
+#include <textidentificationframe.h>
 
 #include <QDebug>
 
+typedef TagLib::MPEG::File TagLibMp3File;
+
 MP3File::MP3File(QString absPath) : AudioFile(absPath)
 {
-   tagLibFile = new TagLib::MPEG::File(absPath.toStdString().c_str());
+   tagLibFile = new TagLibMp3File(absPath.toStdString().c_str());
    extractData();
 }
 
 MP3File::MP3File(QFileInfo file) : AudioFile(file)
 {
-    tagLibFile = new TagLib::MPEG::File(file.absoluteFilePath().toStdString().c_str());
+    tagLibFile = new TagLibMp3File(file.absoluteFilePath().toStdString().c_str());
     extractData();
 }
 
@@ -31,10 +34,11 @@ int MP3File::getYear() const { return year; }
 
 void MP3File::setArtist(QString artist)
 {
-    TagLib::MPEG::File *f = dynamic_cast<TagLib::MPEG::File *>(tagLibFile);
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
     if (f->hasID3v2Tag())
     {
         f->ID3v2Tag()->setArtist(artist.toStdString());
+        this->artist = artist;
     }
 }
 /*
@@ -50,7 +54,7 @@ void MP3File::setYear(int year)*/
 
 void MP3File::extractData()
 {
-    TagLib::MPEG::File *f = dynamic_cast<TagLib::MPEG::File *>(tagLibFile);
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
     if (f->hasID3v2Tag())
     {
         TagLib::ID3v2::Tag *tag = f->ID3v2Tag();
@@ -81,4 +85,10 @@ void MP3File::extractData()
         if (!frames.isEmpty())
             composer = QString(tag->frameList("TCOM").front()->toString().toCString());
     }
+}
+
+bool MP3File::save()
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    return f->save();
 }

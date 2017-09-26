@@ -50,8 +50,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->albumComboBox->addItem(unchanged);
     ui->albumComboBox->setEditText("");
 
-    MP3File f("SampleAudio.mp3");
-    f.setArtist("test");
+    MP3File f("hotline.mp3");
+    f.setArtist("Drakcul");
+    f.save();
 }
 
 MainWindow::~MainWindow()

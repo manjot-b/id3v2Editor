@@ -34,6 +34,8 @@ public:
     virtual void setTrackNumber(QString trackNumber) = 0;
     virtual void setYear(int year) = 0;*/
 
+    virtual bool save() = 0;
+
 
 protected:
     TagLib::File *tagLibFile;    // TagLib::File is an abstract class
