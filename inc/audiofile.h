@@ -23,6 +23,17 @@ public:
     virtual QString getTrackNumber() const = 0;
     virtual int getYear() const = 0;
 
+    virtual void setArtist() const = 0;
+    virtual void setAlbumArtist() const = 0;
+    virtual void setAlbum() const = 0;
+    virtual void setComments() const = 0;
+    virtual void setComposer() const = 0;
+    virtual void setDiscNumber() const = 0;
+    virtual void setLyrics() const = 0;
+    virtual void setTitle() const = 0;
+    virtual void setTrackNumber() const = 0;
+    virtual void setYear() const = 0;
+
 
 protected:
     TagLib::File *tagLibFile;    // TagLib::File is an abstract class
