@@ -29,6 +29,25 @@ QString MP3File::getTitle() const { return title; }
 QString MP3File::getTrackNumber() const { return trackNumber; }
 int MP3File::getYear() const { return year; }
 
+void MP3File::setArtist(QString artist)
+{
+    TagLib::MPEG::File *f = dynamic_cast<TagLib::MPEG::File *>(tagLibFile);
+    if (f->hasID3v2Tag())
+    {
+        f->ID3v2Tag()->setArtist(artist.toStdString());
+    }
+}
+/*
+void MP3File::setAlbumArtist(QString albumArtist)
+void MP3File::setAlbum(QString album)
+void MP3File::setComments(QString comments)
+void MP3File::setComposer(QString composer)
+void MP3File::setDiscNumber(QString discNumber)
+void MP3File::setLyrics(QString lyrics)
+void MP3File::setTitle(QString title)
+void MP3File::setTrackNumber(QString trackNumber)
+void MP3File::setYear(int year)*/
+
 void MP3File::extractData()
 {
     TagLib::MPEG::File *f = dynamic_cast<TagLib::MPEG::File *>(tagLibFile);

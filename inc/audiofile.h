@@ -23,16 +23,16 @@ public:
     virtual QString getTrackNumber() const = 0;
     virtual int getYear() const = 0;
 
-    virtual void setArtist() const = 0;
-    virtual void setAlbumArtist() const = 0;
-    virtual void setAlbum() const = 0;
-    virtual void setComments() const = 0;
-    virtual void setComposer() const = 0;
-    virtual void setDiscNumber() const = 0;
-    virtual void setLyrics() const = 0;
-    virtual void setTitle() const = 0;
-    virtual void setTrackNumber() const = 0;
-    virtual void setYear() const = 0;
+    virtual void setArtist(QString artist) = 0;
+    /*virtual void setAlbumArtist(QString albumArtist) = 0;
+    virtual void setAlbum(QString album) = 0;
+    virtual void setComments(QString comments) = 0;
+    virtual void setComposer(QString composer) = 0;
+    virtual void setDiscNumber(QString discNumber) = 0;
+    virtual void setLyrics(QString lyrics) = 0;
+    virtual void setTitle(QString title) = 0;
+    virtual void setTrackNumber(QString trackNumber) = 0;
+    virtual void setYear(int year) = 0;*/
 
 
 protected:

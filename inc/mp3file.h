@@ -21,6 +21,17 @@ public:
     QString getTrackNumber() const;
     int getYear() const;
 
+    void setArtist(QString artist);
+    void setAlbumArtist(QString albumArtist);
+    void setAlbum(QString album);
+    void setComments(QString comments);
+    void setComposer(QString composer);
+    void setDiscNumber(QString discNumber);
+    void setLyrics(QString lyrics);
+    void setTitle(QString title);
+    void setTrackNumber(QString trackNumber);
+    void setYear(int year);
+
 private:
     void extractData();
 };
