@@ -41,6 +41,21 @@ public:
     QString getTrackTotal(const QModelIndex &) const;
     QString getYear(const QModelIndex &) const;
 
+    void setArtist(const QModelIndex &index, const QString &artist);
+    void setAlbumArtist(const QModelIndex &index, const QString &albumArtist);
+    void setAlbum(const QModelIndex &index, const QString &album);
+    void setComments(const QModelIndex &index, const QString &comments);
+    void setComposer(const QModelIndex &index, const QString &composer);
+    void setDiscNumber(const QModelIndex &index, const QString &discNumber);
+    void setDiscTotal(const QModelIndex &index, const QString &discTotal);
+    void setLyrics(const QModelIndex &index, const QString &lyrics);
+    void setTitle(const QModelIndex &index, const QString &title);
+    void setTrackNumber(const QModelIndex &index, const QString &trackNumber);
+    void setTrackTotal(const QModelIndex &index, const QString &trackTotal);
+    void setYear(const QModelIndex &index, const unsigned int &year);
+
+    void save(const QModelIndex &index);
+
     enum ColumnName
     {
         FILENAME = 0,
@@ -49,8 +64,8 @@ public:
         LASTMODIFIED = 3
     };
 private:
-    QVector<AudioFile *> audioFiles;
     const int cols;
+    QVector<AudioFile *> audioFiles;
     QStringList fileFilters;
 
     bool isInAudioFilesList(AudioFile &file);

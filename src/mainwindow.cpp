@@ -50,6 +50,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->albumComboBox->addItem(unchanged);
     ui->albumComboBox->setEditText("");
 
+    comboBoxes[ComboBoxType::FILENAME] = ui->fileNameComboBox;
+    comboBoxes[ComboBoxType::ARTIST] = ui->artistComboBox;
+    comboBoxes[ComboBoxType::ALBUMARTIST] = ui->albumArtistComboBox;
+    comboBoxes[ComboBoxType::TITLE] = ui->titleComboBox;
+    comboBoxes[ComboBoxType::ALBUM] = ui->albumComboBox;
+    comboBoxes[ComboBoxType::YEAR] = ui->yearComboBox;
+    comboBoxes[ComboBoxType::COMPOSER] = ui->composerComboBox;
+    comboBoxes[ComboBoxType::COMMENTS] = ui->commentsComboBox;
+    comboBoxes[ComboBoxType::TRACK] = ui->trackComboBox;
+    comboBoxes[ComboBoxType::TRACKTOTAL] = ui->trackTotalComboBox;
+    comboBoxes[ComboBoxType::DISC] = ui->discComboBox;
+    comboBoxes[ComboBoxType::DISCTOTAL] = ui->discTotalComboBox;
+
+
 }
 
 MainWindow::~MainWindow()
@@ -113,6 +127,65 @@ void MainWindow::on_audioFilesTableView_selectionChanged(const QItemSelection &,
     setComboBoxText(selections, ComboBoxType::COMPOSER);
 
     setLyricsTextBrowser(selections);
+}
+
+void MainWindow::on_savePushButton_clicked()
+{
+    QModelIndexList selections = ui->audioFilesTableView->selectionModel()->selectedRows();
+
+    for (auto &selection : selections)
+    {
+        QMap<ComboBoxType, QComboBox *>::iterator it = comboBoxes.begin();
+        int test = 1;
+        while (it != comboBoxes.end())
+        {
+            QString field = it.value()->currentText();
+            if (field != unchanged)
+            {
+                switch(it.key())
+                {
+                case ComboBoxType::TITLE:
+                    model->setTitle(selection, field); break;
+                case ComboBoxType::ARTIST:
+                    model->setArtist(selection, field); break;
+                case ComboBoxType::ALBUMARTIST:
+                    model->setAlbumArtist(selection, field); break;
+                case ComboBoxType::ALBUM:
+                    model->setAlbum(selection, field); break;
+                case ComboBoxType::YEAR:
+                {
+                    unsigned int year = field.toInt();
+                    model->setYear(selection, year);
+                    break;
+                }
+                case ComboBoxType::COMPOSER:
+                    model->setComposer(selection, field); break;
+                case ComboBoxType::COMMENTS:
+                    model->setComments(selection, field); break;
+                case ComboBoxType::TRACK:
+                    model->setTrackNumber(selection, field); break;
+                case ComboBoxType::TRACKTOTAL:
+                    model->setTrackTotal(selection, field); break;
+                case ComboBoxType::DISC:
+                    model->setDiscNumber(selection, field); break;
+                case ComboBoxType::DISCTOTAL:
+                    model->setDiscTotal(selection, field); break;
+                default: break;
+                }
+            }
+            it++;
+        }
+        // Handle lyrics
+        QString lyrics = ui->lyricsTextBrowser->toPlainText();
+        if (lyrics != unchanged)
+        {
+            model->setLyrics(selection, lyrics);
+        }
+
+        model->save(selection);
+    }
+
+
 }
 
 void MainWindow::setComboBoxText(const QModelIndexList &selections, ComboBoxType comboBoxType)
@@ -262,3 +335,4 @@ void MainWindow::setLyricsTextBrowser(const QModelIndexList &selections)
     }
     ui->lyricsTextBrowser->setText(lyrics);
 }
+

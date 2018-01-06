@@ -24,22 +24,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    audiofilemodel.cpp \
-    audiofile.cpp \
-    mp3file.cpp
+        src\main.cpp \
+        src\mainwindow.cpp \
+    src\audiofilemodel.cpp \
+    src\audiofile.cpp \
+    src\mp3file.cpp
 
 HEADERS += \
-        mainwindow.h \
-    audiofilemodel.h \
-    audiofile.h \
-    mp3file.h
+        inc\mainwindow.h \
+    inc\audiofilemodel.h \
+    inc\audiofile.h \
+    inc\mp3file.h
 
 FORMS += \
         mainwindow.ui
 
 LIBS += -L$$PWD/libraries/taglib/taglib-release -llibtaglib
+INCLUDEPATH += $$PWD/inc
 
 INCLUDEPATH += $$PWD/libraries/taglib/taglib
 INCLUDEPATH += $$PWD/libraries/taglib/taglib/toolkit

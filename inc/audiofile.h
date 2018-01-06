@@ -23,6 +23,19 @@ public:
     virtual QString getTrackNumber() const = 0;
     virtual int getYear() const = 0;
 
+    virtual void setArtist(const QString &artist) = 0;
+    virtual void setAlbumArtist(const QString &albumArtist) = 0;
+    virtual void setAlbum(const QString &album) = 0;
+    virtual void setComments(const QString &comments) = 0;
+    virtual void setComposer(const QString &composer) = 0;
+    virtual void setDiscNumber(const QString &discNumber) = 0;
+    virtual void setLyrics(const QString &lyrics) = 0;
+    virtual void setTitle(const QString &title) = 0;
+    virtual void setTrackNumber(const QString &trackNumber) = 0;
+    virtual void setYear(const unsigned int &year) = 0;
+
+    virtual bool save() = 0;
+
 
 protected:
     TagLib::File *tagLibFile;    // TagLib::File is an abstract class
@@ -36,7 +49,7 @@ protected:
     QString lyrics;
     QString title;
     QString trackNumber;
-    int year;
+    unsigned int year;
 };
 
 #endif // AUDIOFILE_H
