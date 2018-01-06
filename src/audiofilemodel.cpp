@@ -266,3 +266,92 @@ QString AudioFileModel::getYear(const QModelIndex &index) const
     QString year = QString::number(audioFiles[index.row()]->getYear());
     return year;
 }
+
+void AudioFileModel::setArtist(const QModelIndex &index, const QString &artist)
+{
+    audioFiles[index.row()]->setArtist(artist);
+}
+
+void AudioFileModel::setAlbumArtist(const QModelIndex &index, const QString &albumArtist)
+{
+    audioFiles[index.row()]->setAlbumArtist(albumArtist);
+}
+
+void AudioFileModel::setAlbum(const QModelIndex &index, const QString &album)
+{
+    audioFiles[index.row()]->setAlbum(album);
+}
+
+void AudioFileModel::setComments(const QModelIndex &index, const QString &comments)
+{
+    audioFiles[index.row()]->setComments(comments);
+}
+
+void AudioFileModel::setComposer(const QModelIndex &index, const QString &composer)
+{
+    audioFiles[index.row()]->setComposer(composer);
+}
+
+void AudioFileModel::setDiscNumber(const QModelIndex &index, const QString &discNumber)
+{
+    QStringList discField = audioFiles[index.row()]->getDiscNumber().split('/');
+
+    QString discTotal;
+    if (discField.size() > 1) discTotal = discField.at(1);
+
+    QString newDiscField = discNumber + "/" + discTotal;
+    audioFiles[index.row()]->setDiscNumber(newDiscField);
+}
+
+void AudioFileModel::setDiscTotal(const QModelIndex &index, const QString &discTotal)
+{
+    QStringList discField = audioFiles[index.row()]->getDiscNumber().split('/');
+
+    QString discNumber;
+    if (!discField.isEmpty()) discNumber= discField.at(0);
+
+    QString newDiscField = discNumber + "/" + discTotal;
+    audioFiles[index.row()]->setDiscNumber(newDiscField);
+}
+
+void AudioFileModel::setLyrics(const QModelIndex &index, const QString &lyrics)
+{
+    audioFiles[index.row()]->setLyrics(lyrics);
+}
+
+void AudioFileModel::setTitle(const QModelIndex &index, const QString &title)
+{
+    audioFiles[index.row()]->setTitle(title);
+}
+
+void AudioFileModel::setTrackNumber(const QModelIndex &index, const QString &trackNumber)
+{
+    QStringList trackField = audioFiles[index.row()]->getTrackNumber().split('/');
+
+    QString trackTotal;
+    if (trackField.size() > 1) trackTotal = trackField.at(1);
+
+    QString newTrackField = trackNumber + "/" + trackTotal;
+    audioFiles[index.row()]->setTrackNumber(newTrackField);
+}
+
+void AudioFileModel::setTrackTotal(const QModelIndex &index, const QString &trackTotal)
+{
+    QStringList trackField = audioFiles[index.row()]->getTrackNumber().split('/');
+
+    QString trackNumber;
+    if (!trackField.isEmpty()) trackNumber = trackField.at(0);
+
+    QString newTrackField = trackNumber + "/" + trackTotal;
+    audioFiles[index.row()]->setTrackNumber(newTrackField);
+}
+
+void AudioFileModel::setYear(const QModelIndex &index, const unsigned int &year)
+{
+    audioFiles[index.row()]->setYear(year);
+}
+
+void AudioFileModel::save(const QModelIndex &index)
+{
+    audioFiles[index.row()]->save();
+}

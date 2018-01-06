@@ -21,6 +21,7 @@ public:
     QString getTrackNumber() const;
     int getYear() const;
 
+<<<<<<< HEAD:inc/mp3file.h
     void setArtist(QString artist);
     void setAlbumArtist(QString albumArtist);
     void setAlbum(QString album);
@@ -31,6 +32,18 @@ public:
     void setTitle(QString title);
     void setTrackNumber(QString trackNumber);
     void setYear(int year);
+=======
+    void setArtist(const QString &artist);
+    void setAlbumArtist(const QString &albumArtist);
+    void setAlbum(const QString &album);
+    void setComments(const QString &comments);
+    void setComposer(const QString &composer);
+    void setDiscNumber(const QString &discNumber);
+    void setLyrics(const QString &lyrics);
+    void setTitle(const QString &title);
+    void setTrackNumber(const QString &trackNumber);
+    void setYear(const unsigned int &year);
+>>>>>>> 27bd3ff88ae7f694f03cbf5648ceeef1b78666ff:inc/mp3file.h
 
     bool save();
 

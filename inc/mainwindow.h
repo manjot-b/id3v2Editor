@@ -5,6 +5,8 @@
 #include <QPixmap>
 #include <QItemSelection>
 #include <QModelIndexList>
+#include <QMap>
+#include <QComboBox>
 #include "audiofilemodel.h"
 
 namespace Ui {
@@ -47,11 +49,14 @@ private slots:
     void on_audioFilesTableView_selectionChanged(const QItemSelection &,
                                                  const QItemSelection &);
 
+    void on_savePushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QPixmap *albumCoverPixmap;
     AudioFileModel *model;
     QString unchanged;
+    QMap<ComboBoxType, QComboBox *> comboBoxes;
 
     void setComboBoxText(const QModelIndexList &selections, ComboBoxType comboBoxType);
     void setLyricsTextBrowser(const QModelIndexList &selections);
