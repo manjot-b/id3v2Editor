@@ -4,6 +4,7 @@
 #include <id3v2tag.h>
 #include <id3v2frame.h>
 #include <textidentificationframe.h>
+#include <unsynchronizedlyricsframe.h>
 
 #include <QDebug>
 
@@ -32,25 +33,120 @@ QString MP3File::getTitle() const { return title; }
 QString MP3File::getTrackNumber() const { return trackNumber; }
 int MP3File::getYear() const { return year; }
 
-void MP3File::setArtist(QString artist)
+void MP3File::setArtist(const QString &artist)
 {
     TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
-    if (f->hasID3v2Tag())
-    {
-        f->ID3v2Tag()->setArtist(artist.toStdString());
-        this->artist = artist;
-    }
+    f->ID3v2Tag()->setArtist(artist.toStdString());
+    this->artist = artist;
 }
-/*
-void MP3File::setAlbumArtist(QString albumArtist)
-void MP3File::setAlbum(QString album)
-void MP3File::setComments(QString comments)
-void MP3File::setComposer(QString composer)
-void MP3File::setDiscNumber(QString discNumber)
-void MP3File::setLyrics(QString lyrics)
-void MP3File::setTitle(QString title)
-void MP3File::setTrackNumber(QString trackNumber)
-void MP3File::setYear(int year)*/
+
+void MP3File::setAlbumArtist(const QString &albumArtist)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    if (f->ID3v2Tag()->frameList("TPE2").isEmpty())
+    {
+        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame("TPE2");
+        frame->setText(albumArtist.toStdString());
+        f->ID3v2Tag()->addFrame(frame);
+    }
+    else
+    {
+        f->ID3v2Tag()->frameList("TPE2").front()->setText(albumArtist.toStdString());
+    }
+    this->albumArtist = albumArtist;
+}
+
+void MP3File::setAlbum(const QString &album)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    f->ID3v2Tag()->setAlbum(album.toStdString());
+    this->album= album;
+}
+
+void MP3File::setComments(const QString &comments)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    f->ID3v2Tag()->setComment(comments.toStdString());
+    this->comments = comments;
+}
+
+void MP3File::setComposer(const QString &composer)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    if (f->ID3v2Tag()->frameList("TCOM").isEmpty())
+    {
+        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame("TCOM");
+        frame->setText(composer.toStdString());
+        f->ID3v2Tag()->addFrame(frame);
+    }
+    else
+    {
+        f->ID3v2Tag()->frameList("TCOM").front()->setText(composer.toStdString());
+    }
+    this->composer = composer;
+}
+
+void MP3File::setDiscNumber(const QString &discNumber)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    if (f->ID3v2Tag()->frameList("TPOS").isEmpty())
+    {
+        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame("TPOS");
+        frame->setText(discNumber.toStdString());
+        f->ID3v2Tag()->addFrame(frame);
+    }
+    else
+    {
+        f->ID3v2Tag()->frameList("TPOS").front()->setText(discNumber.toStdString());
+    }
+    this->discNumber = discNumber;
+}
+
+void MP3File::setLyrics(const QString &lyrics)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    if (f->ID3v2Tag()->frameList("USLT").isEmpty())
+    {
+        TagLib::ID3v2::UnsynchronizedLyricsFrame *frame = new TagLib::ID3v2::UnsynchronizedLyricsFrame();
+        frame->setText(lyrics.toStdString());
+        f->ID3v2Tag()->addFrame(frame);
+    }
+    else
+    {
+        f->ID3v2Tag()->frameList("USLT").front()->setText(lyrics.toStdString());
+    }
+    this->lyrics = lyrics;
+}
+
+void MP3File::setTitle(const QString &title)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    f->ID3v2Tag()->setTitle(title.toStdString());
+    this->title= title;
+}
+
+void MP3File::setTrackNumber(const QString &trackNumber)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    if (f->ID3v2Tag()->frameList("TRCK").isEmpty())
+    {
+        TagLib::ID3v2::TextIdentificationFrame *frame = new TagLib::ID3v2::TextIdentificationFrame("TRCK");
+        frame->setText(trackNumber.toStdString());
+        f->ID3v2Tag()->addFrame(frame);
+    }
+    else
+    {
+        f->ID3v2Tag()->frameList("TRCK").front()->setText(trackNumber.toStdString());
+    }
+    this->trackNumber = trackNumber;
+}
+
+void MP3File::setYear(const unsigned int &year)
+{
+    TagLibMp3File *f = dynamic_cast<TagLibMp3File *>(tagLibFile);
+    f->ID3v2Tag()->setYear(year);
+    this->year = year;
+}
 
 void MP3File::extractData()
 {

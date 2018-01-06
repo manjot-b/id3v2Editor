@@ -50,11 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->albumComboBox->addItem(unchanged);
     ui->albumComboBox->setEditText("");
 
-<<<<<<< HEAD:src/mainwindow.cpp
-    MP3File f("hotline.mp3");
-    f.setArtist("Drakcul");
-    f.save();
-=======
     comboBoxes[ComboBoxType::FILENAME] = ui->fileNameComboBox;
     comboBoxes[ComboBoxType::ARTIST] = ui->artistComboBox;
     comboBoxes[ComboBoxType::ALBUMARTIST] = ui->albumArtistComboBox;
@@ -68,8 +63,6 @@ MainWindow::MainWindow(QWidget *parent) :
     comboBoxes[ComboBoxType::DISC] = ui->discComboBox;
     comboBoxes[ComboBoxType::DISCTOTAL] = ui->discTotalComboBox;
 
-
->>>>>>> 27bd3ff88ae7f694f03cbf5648ceeef1b78666ff:src/mainwindow.cpp
 }
 
 MainWindow::~MainWindow()

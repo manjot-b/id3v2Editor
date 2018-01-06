@@ -23,18 +23,6 @@ public:
     virtual QString getTrackNumber() const = 0;
     virtual int getYear() const = 0;
 
-<<<<<<< HEAD:inc/audiofile.h
-    virtual void setArtist(QString artist) = 0;
-    /*virtual void setAlbumArtist(QString albumArtist) = 0;
-    virtual void setAlbum(QString album) = 0;
-    virtual void setComments(QString comments) = 0;
-    virtual void setComposer(QString composer) = 0;
-    virtual void setDiscNumber(QString discNumber) = 0;
-    virtual void setLyrics(QString lyrics) = 0;
-    virtual void setTitle(QString title) = 0;
-    virtual void setTrackNumber(QString trackNumber) = 0;
-    virtual void setYear(int year) = 0;*/
-=======
     virtual void setArtist(const QString &artist) = 0;
     virtual void setAlbumArtist(const QString &albumArtist) = 0;
     virtual void setAlbum(const QString &album) = 0;
@@ -45,7 +33,7 @@ public:
     virtual void setTitle(const QString &title) = 0;
     virtual void setTrackNumber(const QString &trackNumber) = 0;
     virtual void setYear(const unsigned int &year) = 0;
->>>>>>> 27bd3ff88ae7f694f03cbf5648ceeef1b78666ff:inc/audiofile.h
+
 
     virtual bool save() = 0;
 
